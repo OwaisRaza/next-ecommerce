@@ -11,7 +11,7 @@ import {
 import NextLink from "next/link";
 import Layout from "../components/Layout";
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch("https://dummyjson.com/products");
   const data = await res.json();
 

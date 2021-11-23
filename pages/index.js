@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import NextLink from "next/link";
 import Layout from "../components/Layout";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
 
 export const getServerSideProps = async () => {
   const res = await fetch("https://dummyjson.com/products");
@@ -21,6 +23,18 @@ export const getServerSideProps = async () => {
 };
 
 const Home = ({ products }) => {
+  const { state, dispatch } = useContext(Store);
+
+  const addToCartHandler = (product) => {
+    const existItem = state.cart.cartItems.find((x) => x.id === product.id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (product.stock < quantity) {
+      window.alert("Sorry Product is out of stock");
+      return;
+    }
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+  };
+
   return (
     <Layout>
       <div>
@@ -44,7 +58,11 @@ const Home = ({ products }) => {
                 </NextLink>
                 <CardActions>
                   <Typography>${product.price}</Typography>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => addToCartHandler(product)}
+                  >
                     Add to cart
                   </Button>
                 </CardActions>

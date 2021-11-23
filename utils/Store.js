@@ -18,16 +18,22 @@ function reducer(state, action) {
     case "DARK_MODE_OFF":
       return { ...state, darkMode: false };
     case "CART_ADD_ITEM": {
-      console.log(state);
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
         (item) => item.id === newItem.id
       );
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-            item.name === existItem.name ? newItem : item
+            item.id === existItem.id ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
+      Cookies.set("cartItems", JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    case "CART_REMOVE_ITEM": {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item.id !== action.payload.id
+      );
       Cookies.set("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }

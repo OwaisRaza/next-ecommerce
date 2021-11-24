@@ -7,6 +7,10 @@ const useStyles = makeStyles({
       color: "#ffffff",
       marginLeft: 10,
     },
+    "& button": {
+      color: "#ffffff",
+      marginLeft: 10,
+    },
   },
   brand: {
     fontWeight: "bold",
@@ -24,6 +28,10 @@ const useStyles = makeStyles({
   },
   footer: {
     textAlign: "center",
+  },
+  form: {
+    maxWidth: "800px",
+    margin: "0 auto",
   },
 });
 

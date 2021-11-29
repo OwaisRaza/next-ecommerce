@@ -65,7 +65,7 @@ export default function Login() {
             <Controller
               name="username"
               control={control}
-              defaultValue=""
+              defaultValue="kminchelle"
               rules={{
                 required: true,
               }}
@@ -87,7 +87,7 @@ export default function Login() {
             <Controller
               name="password"
               control={control}
-              defaultValue=""
+              defaultValue="0lelplR"
               rules={{
                 required: true,
                 minLength: 6,

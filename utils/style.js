@@ -33,6 +33,9 @@ const useStyles = makeStyles({
     maxWidth: "800px",
     margin: "0 auto",
   },
+  transparentBackground: {
+    background: "transparent",
+  },
 });
 
 export default useStyles;

@@ -22,17 +22,21 @@ import NextLink from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack-next";
 
 function CartScreen() {
   const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
 
   const updateCartHandler = (item, quantity) => {
+    closeSnackbar();
     if (item.currentInStock <= 0) {
-      window.alert("Sorry Product is out of stock");
+      enqueueSnackbar("Sorry Product is out of stock", { variant: "error" });
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });

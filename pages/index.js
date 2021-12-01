@@ -15,15 +15,19 @@ import { Store } from "../utils/Store";
 import useStyles from "../utils/style";
 import db from "../utils/db";
 import Product from "../models/Product";
+import { useSnackbar } from "notistack-next";
 
 const Home = ({ products }) => {
   const { state, dispatch } = useContext(Store);
   const classes = useStyles();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const addToCartHandler = (product) => {
-    const existItem = state.cart.cartItems.find((x) => x.id === product.id);
+    closeSnackbar();
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    if (product.stock < quantity) {
-      window.alert("Sorry Product is out of stock");
+    if (product.currentInStock < quantity) {
+      enqueueSnackbar("Sorry Product is out of stock", { variant: "error" });
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });

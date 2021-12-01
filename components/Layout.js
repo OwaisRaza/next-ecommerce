@@ -82,7 +82,7 @@ const Layout = ({ title, description, children }) => {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position="static" className={classes.navbar}>
+        <AppBar position="sticky" className={classes.navbar}>
           <Toolbar>
             <NextLink href="/" passHref>
               <Link>

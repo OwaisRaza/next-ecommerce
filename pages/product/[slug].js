@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { Store } from "../../utils/Store";
 import Product from "../../models/Product";
 import db from "../../utils/db";
+import { useSnackbar } from "notistack-next";
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;
@@ -29,13 +30,16 @@ export async function getServerSideProps(context) {
 
 const ProductDetails = ({ product }) => {
   const classes = useStyles();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const { state, dispatch } = useContext(Store);
 
   const onAddCartHandler = () => {
+    closeSnackbar();
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (product.currentInStock < quantity) {
-      window.alert("Sorry Product is out of stock");
+      enqueueSnackbar("Sorry Product is out of stock", { variant: "error" });
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });

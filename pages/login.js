@@ -39,12 +39,13 @@ export default function Login() {
   const submitHandler = async ({ username, password }) => {
     closeSnackbar();
     try {
-      const { data } = await axios.post("https://dummyjson.com/auth/login", {
+      const { data } = await axios.post("/api/users/login", {
         username,
         password,
       });
       dispatch({ type: "USER_LOGIN", payload: data });
       Cookies.set("userInfo", JSON.stringify(data));
+      enqueueSnackbar("login successfully", { variant: "success" });
       router.push(redirect || "/");
     } catch (error) {
       enqueueSnackbar(
@@ -65,7 +66,7 @@ export default function Login() {
             <Controller
               name="username"
               control={control}
-              defaultValue="kminchelle"
+              defaultValue="ovais"
               rules={{
                 required: true,
               }}
@@ -87,7 +88,7 @@ export default function Login() {
             <Controller
               name="password"
               control={control}
-              defaultValue="0lelplR"
+              defaultValue="ovais314"
               rules={{
                 required: true,
                 minLength: 6,

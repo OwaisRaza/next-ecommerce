@@ -83,6 +83,7 @@ function PlaceOrder() {
         dispatch({ type: "CART_CLEAR" });
         Cookies.remove("cartItems");
         setLoading(false);
+        router.push(`/order/${cartItems[0]._id}`);
       }, 3000);
     } catch (err) {
       setLoading(false);
@@ -139,21 +140,21 @@ function PlaceOrder() {
                       </TableHead>
                       <TableBody>
                         {cartItems.map((item) => (
-                          <TableRow key={item.id}>
+                          <TableRow key={item._id}>
                             <TableCell>
-                              <NextLink href={`/product/${item.id}`} passHref>
+                              <NextLink href={`/product/${item.slug}`} passHref>
                                 <Link>
                                   <Image
-                                    src={item.images[0]}
+                                    src={item.img}
                                     alt={item.title}
-                                    width={50}
-                                    height={50}
+                                    width={100}
+                                    height={60}
                                   ></Image>
                                 </Link>
                               </NextLink>
                             </TableCell>
                             <TableCell>
-                              <NextLink href={`/product/${item.id}`} passHref>
+                              <NextLink href={`/product/${item.slug}`} passHref>
                                 <Link>
                                   <Typography>{item.title}</Typography>
                                 </Link>

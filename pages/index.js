@@ -12,19 +12,13 @@ import NextLink from "next/link";
 import Layout from "../components/Layout";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
-
-export const getServerSideProps = async () => {
-  const res = await fetch("https://dummyjson.com/products");
-  const data = await res.json();
-
-  return {
-    props: { products: data.products },
-  };
-};
+import useStyles from "../utils/style";
+import db from "../utils/db";
+import Product from "../models/Product";
 
 const Home = ({ products }) => {
   const { state, dispatch } = useContext(Store);
-
+  const classes = useStyles();
   const addToCartHandler = (product) => {
     const existItem = state.cart.cartItems.find((x) => x.id === product.id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -41,15 +35,15 @@ const Home = ({ products }) => {
         <h1>Products</h1>
         <Grid container spacing={3}>
           {products.map((product) => (
-            <Grid item md={4} key={product.id}>
+            <Grid item md={4} key={product._id}>
               <Card>
-                <NextLink href={`/product/${product.id}`} passHref>
+                <NextLink href={`/product/${product.slug}`} passHref>
                   <CardActionArea>
                     <CardMedia
+                      className={classes.img}
                       component="img"
-                      image={product.images[0]}
+                      image={product.img}
                       title={product.title}
-                      height="230px"
                     ></CardMedia>
                     <CardContent>
                       <Typography>{product.title}</Typography>
@@ -74,5 +68,17 @@ const Home = ({ products }) => {
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  // const res = await fetch("https://dummyjson.com/products");
+  // const data = await res.json();
+  await db.connect();
+  const products = await Product.find({}).lean();
+  await db.disconnect();
+
+  return {
+    props: { products: products.map(db.convertDocToObj) },
+  };
+}
 
 export default Home;

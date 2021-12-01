@@ -36,6 +36,14 @@ const useStyles = makeStyles({
   transparentBackground: {
     background: "transparent",
   },
+  error: {
+    color: "#f04040",
+  },
+  img: {
+    minHeight: "210px",
+    maxHeight: "210px",
+    objectFit: "fill !important",
+  },
 });
 
 export default useStyles;

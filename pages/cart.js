@@ -31,7 +31,7 @@ function CartScreen() {
   } = state;
 
   const updateCartHandler = (item, quantity) => {
-    if (item.stock <= 0) {
+    if (item.currentInStock <= 0) {
       window.alert("Sorry Product is out of stock");
       return;
     }
@@ -75,21 +75,21 @@ function CartScreen() {
                   </TableHead>
                   <TableBody>
                     {cartItems.map((item) => (
-                      <TableRow key={item.id}>
+                      <TableRow key={item._id}>
                         <TableCell>
-                          <NextLink href={`/product/${item.id}`} passHref>
+                          <NextLink href={`/product/${item.slug}`} passHref>
                             <Link>
                               <Image
-                                src={item.images[0]}
+                                src={item.img}
                                 alt={item.title}
-                                width={50}
-                                height={50}
+                                width={100}
+                                height={60}
                               ></Image>
                             </Link>
                           </NextLink>
                         </TableCell>
                         <TableCell>
-                          <NextLink href={`/product/${item.id}`} passHref>
+                          <NextLink href={`/product/${item.slug}`} passHref>
                             <Link>
                               <Typography>{item.title}</Typography>
                             </Link>
@@ -102,7 +102,7 @@ function CartScreen() {
                               updateCartHandler(item, e.target.value)
                             }
                           >
-                            {[...Array(item.stock).keys()].map((x) => (
+                            {[...Array(item.currentInStock).keys()].map((x) => (
                               <MenuItem key={x + 1} value={x + 1}>
                                 {x + 1}
                               </MenuItem>

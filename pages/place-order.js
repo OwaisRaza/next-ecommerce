@@ -161,7 +161,7 @@ function PlaceOrder() {
                               </NextLink>
                             </TableCell>
                             <TableCell align="right">
-                              <Typography>${item.quantity}</Typography>
+                              <Typography>{item.quantity}</Typography>
                             </TableCell>
                             <TableCell align="right">
                               <Typography>${item.price}</Typography>

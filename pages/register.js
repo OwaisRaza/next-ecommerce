@@ -48,7 +48,7 @@ export default function Register() {
       return;
     }
     try {
-      const { data } = await axios.post("https://dummyjson.com/users/add", {
+      const { data } = await axios.post("/api/users/register", {
         username,
         email,
         password,

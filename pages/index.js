@@ -34,7 +34,7 @@ const Home = ({ products }) => {
   };
 
   return (
-    <Layout>
+    <Layout title="Home" carousel={true}>
       <div>
         <h1>Products</h1>
         <Grid container spacing={3}>

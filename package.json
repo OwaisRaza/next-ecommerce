@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.1",
@@ -19,7 +20,8 @@
     "notistack-next": "^5.0.0-alpha.9",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.20.2"
+    "react-hook-form": "^7.20.2",
+    "react-material-ui-carousel": "^2.3.8"
   },
   "devDependencies": {
     "eslint": "7",

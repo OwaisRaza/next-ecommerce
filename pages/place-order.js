@@ -83,7 +83,7 @@ function PlaceOrder() {
         dispatch({ type: "CART_CLEAR" });
         Cookies.remove("cartItems");
         setLoading(false);
-        router.push(`/order/${cartItems[0]._id}`);
+        router.push(`/order/${cartItems._id}`);
       }, 3000);
     } catch (err) {
       setLoading(false);

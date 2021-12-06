@@ -19,8 +19,9 @@ import { useContext, useState } from "react";
 import { Store } from "../utils/Store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import CarouselView from "./Carousel";
 
-const Layout = ({ title, description, children }) => {
+const Layout = ({ title, description, children, carousel }) => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { darkMode, cart, userInfo } = state;
@@ -135,6 +136,7 @@ const Layout = ({ title, description, children }) => {
             )}
           </Toolbar>
         </AppBar>
+        {carousel && <CarouselView />}
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
           <Typography>All rights reserved. Ovais Raza </Typography>

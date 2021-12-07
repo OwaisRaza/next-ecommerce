@@ -25,7 +25,7 @@ import useStyles from "../utils/style";
 import CheckoutWizard from "../components/CheckoutWizard";
 import { useSnackbar } from "notistack-next";
 import { getError } from "../utils/error";
-// import axios from "axios";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 function PlaceOrder() {
@@ -33,7 +33,7 @@ function PlaceOrder() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
-    // userInfo,
+    userInfo,
     cart: { cartItems, shippingAddress, paymentMethod },
   } = state;
 
@@ -57,34 +57,31 @@ function PlaceOrder() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
 
-  const placeOrderHandler = () => {
+  const placeOrderHandler = async () => {
     closeSnackbar();
     try {
       setLoading(true);
-
-      // const { data } = await axios.post(
-      //   "/.../....",
-      //   {
-      //     orderItems: cartItems,
-      //     shippingAddress,
-      //     paymentMethod,
-      //     itemsPrice,
-      //     shippingPrice,
-      //     taxPrice,
-      //     totalPrice,
-      //   },
-      //   {
-      //     headers: {
-      //       authorization: `Bearer ${userInfo.token}`,
-      //     },
-      //   }
-      // );
-      setTimeout(() => {
-        dispatch({ type: "CART_CLEAR" });
-        Cookies.remove("cartItems");
-        setLoading(false);
-        router.push(`/order/${cartItems._id}`);
-      }, 3000);
+      const { data } = await axios.post(
+        "/api/orders",
+        {
+          orderItems: cartItems,
+          shippingAddress,
+          paymentMethod,
+          itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({ type: "CART_CLEAR" });
+      Cookies.remove("cartItems");
+      setLoading(false);
+      router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
       enqueueSnackbar(getError(err), { variant: "error" });

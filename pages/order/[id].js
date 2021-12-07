@@ -22,7 +22,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import useStyles from "../../utils/style";
 import CheckoutWizard from "../../components/CheckoutWizard";
-// import axios from "axios";
+import axios from "axios";
 import { getError } from "../../utils/error";
 
 function reducer(state, action) {
@@ -39,7 +39,7 @@ function reducer(state, action) {
 }
 
 function Order({ params }) {
-  const orderId = params.order_id;
+  const orderId = params.id;
   const classes = useStyles();
   const router = useRouter();
   const { state } = useContext(Store);
@@ -72,13 +72,12 @@ function Order({ params }) {
     const fetchOrder = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        // const { data } = await axios.get(`/.../${orderId}`,
-        // {
-        //   headers: {
-        //     authorization: `Bearer ${userInfo.token}`,
-        //   },
-        // });
-        dispatch({ type: "FETCH_SUCCESS", payload: {} });
+        const { data } = await axios.get(`/api/orders/${orderId}`, {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        });
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
@@ -113,7 +112,7 @@ function Order({ params }) {
                     {shippingAddress?.country}
                   </ListItem>
                   <ListItem>
-                    Status{" "}
+                    Status:{" "}
                     {isDelivered
                       ? `delivered at ${deliveredAt}`
                       : "not delivered"}
@@ -127,7 +126,7 @@ function Order({ params }) {
                   </ListItem>
                   <ListItem>{paymentMethod}</ListItem>
                   <ListItem>
-                    Status {isPaid ? `paid at ${paidAt}` : "not paid"}
+                    Status: {isPaid ? `paid at ${paidAt}` : "not paid"}
                   </ListItem>
                 </List>
               </Card>
@@ -150,7 +149,7 @@ function Order({ params }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {orderItems.map((item) => (
+                          {orderItems?.map((item) => (
                             <TableRow key={item._id}>
                               <TableCell>
                                 <NextLink

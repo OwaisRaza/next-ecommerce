@@ -16,6 +16,7 @@ import useStyles from "../utils/style";
 import db from "../utils/db";
 import Product from "../models/Product";
 import { useSnackbar } from "notistack-next";
+import Rating from "material-ui-rating";
 
 const Home = ({ products }) => {
   const { state, dispatch } = useContext(Store);
@@ -51,6 +52,7 @@ const Home = ({ products }) => {
                     ></CardMedia>
                     <CardContent>
                       <Typography>{product.title}</Typography>
+                      <Rating value={product.rating} readOnly></Rating>
                     </CardContent>
                   </CardActionArea>
                 </NextLink>

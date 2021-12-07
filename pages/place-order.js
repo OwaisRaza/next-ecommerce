@@ -232,6 +232,16 @@ function PlaceOrder() {
                     Place Order
                   </Button>
                 </ListItem>
+                <ListItem>
+                  <Button
+                    variant="contained"
+                    type="button"
+                    fullWidth
+                    onClick={() => router.push("/payment")}
+                  >
+                    Back
+                  </Button>
+                </ListItem>
                 {loading && (
                   <ListItem>
                     <CircularProgress />

@@ -41,7 +41,7 @@ const Layout = ({ title, description, children, carousel }) => {
     palette: {
       type: darkMode ? "dark" : "light",
       primary: {
-        main: "#f0c000",
+        main: "#41b883",
       },
       secondary: {
         main: "#208080",
@@ -57,8 +57,11 @@ const Layout = ({ title, description, children, carousel }) => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const loginClickHandler = (e) => {
+  const loginClickHandler = (e, redirect) => {
     setAnchorEl(e.currentTarget);
+    if (redirect) {
+      router.push(redirect);
+    }
   };
 
   const handleClose = () => {
@@ -122,8 +125,14 @@ const Layout = ({ title, description, children, carousel }) => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-                  {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                  <MenuItem onClick={(e) => loginClickHandler(e, "/profile")}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={(e) => loginClickHandler(e, "/order-history")}
+                  >
+                    Order History
+                  </MenuItem>
                   <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
                 </Menu>
               </>

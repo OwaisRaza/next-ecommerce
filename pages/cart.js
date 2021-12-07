@@ -27,7 +27,6 @@ import { useSnackbar } from "notistack-next";
 function CartScreen() {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },

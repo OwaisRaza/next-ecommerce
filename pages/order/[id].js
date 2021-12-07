@@ -21,7 +21,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import useStyles from "../../utils/style";
-import CheckoutWizard from "../../components/CheckoutWizard";
 import axios from "axios";
 import { getError } from "../../utils/error";
 
@@ -89,7 +88,6 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      <CheckoutWizard activeStep={4}></CheckoutWizard>
       <Typography component="h1" variant="h1">
         Order {orderId}
       </Typography>

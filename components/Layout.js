@@ -41,11 +41,11 @@ const Layout = ({ title, description, children, carousel }) => {
     palette: {
       type: darkMode ? "dark" : "light",
       primary: {
-        main: "#41b883",
+        main: "#009688",
       },
-      secondary: {
-        main: "#208080",
-      },
+      // secondary: {
+      //   main: "#41b883",
+      // },
     },
   });
   const classes = useStyles();

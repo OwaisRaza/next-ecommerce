@@ -16,6 +16,7 @@ handler.post(async (req, res) => {
     user: req.user._id,
   });
   const order = await newOrder.save();
+  db.disconnect();
   res.status(201).send(order);
 });
 

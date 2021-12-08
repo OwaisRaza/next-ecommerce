@@ -61,6 +61,7 @@ function PlaceOrder() {
     closeSnackbar();
     try {
       setLoading(true);
+      console.log("cartItems: ", cartItems);
       const { data } = await axios.post(
         "/api/orders",
         {

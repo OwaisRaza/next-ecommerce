@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
         quantity: { type: Number, required: true },
         img: { type: String, required: true },
         price: { type: Number, required: true },
-        slug: { type: String, required: true, unique: true },
+        slug: { type: String, required: true, sparse: true },
       },
     ],
     shippingAddress: {

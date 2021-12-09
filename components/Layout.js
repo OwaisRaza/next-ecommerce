@@ -148,7 +148,7 @@ const Layout = ({ title, description, children, carousel }) => {
         {carousel && <CarouselView />}
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>All rights reserved. Ovais Raza </Typography>
+          <Typography>All rights reserved. Next Commerce </Typography>
         </footer>
       </ThemeProvider>
     </div>

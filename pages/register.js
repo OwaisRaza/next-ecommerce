@@ -16,6 +16,7 @@ import { useSnackbar } from "notistack-next";
 import Cookies from "js-cookie";
 import { useContext, useEffect } from "react";
 import { Store } from "../utils/Store";
+import { getError } from "../utils/error";
 
 export default function Register() {
   const { state, dispatch } = useContext(Store);
@@ -55,12 +56,10 @@ export default function Register() {
       });
       dispatch({ type: "USER_LOGIN", payload: data });
       Cookies.set("userInfo", JSON.stringify(data));
+      enqueueSnackbar("user created successfully", { variant: "success" });
       router.push(redirect || "/");
     } catch (error) {
-      enqueueSnackbar(
-        error.response.data ? error.response.data.message : error.message,
-        { variant: "error" }
-      );
+      enqueueSnackbar(getError(error), { variant: "error" });
     }
   };
 

@@ -30,6 +30,7 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   form: {
+    width: "100%",
     maxWidth: "800px",
     margin: "0 auto",
   },

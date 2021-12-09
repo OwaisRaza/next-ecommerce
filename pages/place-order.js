@@ -82,6 +82,7 @@ function PlaceOrder() {
       dispatch({ type: "CART_CLEAR" });
       Cookies.remove("cartItems");
       setLoading(false);
+      enqueueSnackbar("Order created successfully...", { variant: "success" });
       router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
@@ -101,7 +102,18 @@ function PlaceOrder() {
             <Card className={classes.section}>
               <List>
                 <ListItem>
-                  <Typography variant="h2">Shipping Address</Typography>
+                  <Grid container spacing={1}>
+                    <Grid item sm={6}>
+                      <Typography variant="h2">Shipping Address</Typography>
+                    </Grid>
+                    <Grid item sm={6} align="right">
+                      <NextLink href={`/shipping`} passHref>
+                        <Link>
+                          <Typography>Change Address</Typography>
+                        </Link>
+                      </NextLink>
+                    </Grid>
+                  </Grid>
                 </ListItem>
                 <ListItem>
                   {shippingAddress?.fullName}, {shippingAddress?.address},{" "}
@@ -113,7 +125,18 @@ function PlaceOrder() {
             <Card className={classes.section}>
               <List>
                 <ListItem>
-                  <Typography variant="h2">Payment Method</Typography>
+                  <Grid container spacing={1}>
+                    <Grid item sm={6}>
+                      <Typography variant="h2">Payment Method</Typography>
+                    </Grid>
+                    <Grid item sm={6} align="right">
+                      <NextLink href={`/payment`} passHref>
+                        <Link>
+                          <Typography>Change Method</Typography>
+                        </Link>
+                      </NextLink>
+                    </Grid>
+                  </Grid>
                 </ListItem>
                 <ListItem>{paymentMethod}</ListItem>
               </List>

@@ -29,7 +29,7 @@ function CartScreen() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { state, dispatch } = useContext(Store);
   const {
-    cart: { cartItems },
+    cart: { cartItems, shippingAddress, paymentMethod },
   } = state;
 
   const updateCartHandler = (item, quantity) => {
@@ -46,7 +46,11 @@ function CartScreen() {
   };
 
   const checkOutHandler = () => {
-    router.push("/shipping");
+    if (shippingAddress.length || paymentMethod) {
+      router.push("/place-order");
+    } else {
+      router.push("/shipping");
+    }
   };
 
   return (

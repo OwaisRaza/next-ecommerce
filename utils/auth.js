@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import config from "../next.config";
 
 const signToken = (user) => {
   return jwt.sign(
@@ -7,7 +8,7 @@ const signToken = (user) => {
       username: user.username,
       isAdmin: user.isAdmin,
     },
-    process.env.JWT_SECRET,
+    config.jwtSecret,
     {
       expiresIn: "30d",
     }
@@ -19,7 +20,7 @@ const isAuth = async (req, res, next) => {
   if (authorization) {
     // Bearer xxx => xxx
     const token = authorization.slice(7, authorization.length);
-    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+    jwt.verify(token, config.jwtSecret, (err, decode) => {
       if (err) {
         res.status(401).send({ message: "Token is not valid" });
       } else {

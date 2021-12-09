@@ -1,5 +1,5 @@
+import config from "./../next.config";
 import mongoose from "mongoose";
-
 const connection = {};
 
 async function connect() {
@@ -15,7 +15,7 @@ async function connect() {
     }
     await mongoose.disconnect();
   }
-  const db = await mongoose.connect(process.env.MONGODB_URI, {
+  const db = await mongoose.connect(config.mongo, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -23,9 +23,10 @@ async function connect() {
   connection.isConnected = db.connections[0].readyState;
 }
 
-async function disconnect() {
+async function disconnect(prod = true) {
   if (connection.isConnected) {
-    if (process.env.NODE_ENV === "production") {
+    //if (process.env.NODE_ENV === "production") {
+    if (prod) {
       await mongoose.disconnect();
       connection.isConnected = false;
     } else {

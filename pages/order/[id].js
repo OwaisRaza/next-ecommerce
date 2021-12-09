@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   CircularProgress,
+  Button,
 } from "@material-ui/core";
 import { useContext, useEffect, useReducer } from "react";
 import Layout from "../../components/Layout";
@@ -85,6 +86,10 @@ function Order({ params }) {
       fetchOrder();
     }
   }, [order]);
+
+  const goBackHandler = () => {
+    router.push("/");
+  };
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -241,6 +246,14 @@ function Order({ params }) {
                   </ListItem>
                 </List>
               </Card>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={goBackHandler}
+              >
+                Go Back To Home
+              </Button>
             </Grid>
           </Grid>
         </div>

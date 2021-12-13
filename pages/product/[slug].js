@@ -59,9 +59,9 @@ const ProductDetails = ({ product }) => {
           <Image
             src={product.img}
             alt={product.title}
-            width={600}
+            width={700}
             height={350}
-            layout="fixed"
+            layout="responsive"
           />
         </Grid>
         <Grid item md={3} xs={12}>

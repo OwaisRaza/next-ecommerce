@@ -66,7 +66,7 @@ export default function Login() {
             <Controller
               name="username"
               control={control}
-              defaultValue="ovais"
+              defaultValue=""
               rules={{
                 required: true,
               }}
@@ -88,7 +88,7 @@ export default function Login() {
             <Controller
               name="password"
               control={control}
-              defaultValue="ovais314"
+              defaultValue=""
               rules={{
                 required: true,
                 minLength: 6,

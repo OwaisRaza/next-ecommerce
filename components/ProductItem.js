@@ -26,7 +26,7 @@ export default function ProductItem({ product, addToCartHandler }) {
           ></CardMedia>
           <CardContent>
             <Typography>{product.title}</Typography>
-            <Rating value={product.rating} readOnly></Rating>
+            <Rating value={product.rating} precision={0.5} readOnly></Rating>
           </CardContent>
         </CardActionArea>
       </NextLink>

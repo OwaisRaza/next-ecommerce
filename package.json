@@ -5,13 +5,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
+    "chart.js": "^3.6.2",
     "dotenv": "^10.0.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -21,12 +23,19 @@
     "next-connect": "^0.11.0",
     "notistack-next": "^5.0.0-alpha.9",
     "react": "17.0.2",
+    "react-chartjs-2": "^4.0.0",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.20.2",
     "react-material-ui-carousel": "^2.3.8"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.5",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^27.4.5",
     "eslint": "7",
-    "eslint-config-next": "12.0.3"
+    "eslint-config-next": "12.0.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.5"
   }
 }

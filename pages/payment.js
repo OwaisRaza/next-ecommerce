@@ -55,6 +55,7 @@ export default function Payment() {
         <Typography component="h1" variant="h1">
           Payment
         </Typography>
+        <h1>Payment</h1>
         <List>
           <ListItem>
             <FormControl component="fieldset">

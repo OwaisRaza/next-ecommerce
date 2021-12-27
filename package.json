@@ -14,11 +14,13 @@
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.6.2",
+    "cloudinary": "^1.27.1",
     "dotenv": "^10.0.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "material-ui-rating": "^4.0.0-beta.2",
     "mongoose": "^6.0.14",
+    "multer": "^1.4.4",
     "next": "12.0.3",
     "next-connect": "^0.11.0",
     "notistack-next": "^5.0.0-alpha.9",
@@ -26,7 +28,8 @@
     "react-chartjs-2": "^4.0.0",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.20.2",
-    "react-material-ui-carousel": "^2.3.8"
+    "react-material-ui-carousel": "^2.3.8",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",

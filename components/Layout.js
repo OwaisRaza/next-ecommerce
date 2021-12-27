@@ -133,6 +133,13 @@ const Layout = ({ title, description, children, carousel }) => {
                   >
                     Order History
                   </MenuItem>
+                  {userInfo.isAdmin && (
+                    <MenuItem
+                      onClick={(e) => loginClickHandler(e, "/admin/dashboard")}
+                    >
+                      Admin Dashboard
+                    </MenuItem>
+                  )}
                   <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
                 </Menu>
               </>

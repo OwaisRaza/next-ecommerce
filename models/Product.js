@@ -12,6 +12,8 @@ const productSchema = new mongoose.Schema(
     brand: { type: String, required: true },
     description: { type: String, required: true },
     img: { type: String, required: true },
+    featuredImage: { type: String },
+    isFeatured: { type: Boolean, required: true, default: false },
   },
   {
     timestamps: true,

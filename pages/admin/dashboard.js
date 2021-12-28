@@ -15,7 +15,7 @@ import {
   CardContent,
   CardActions,
 } from "@material-ui/core";
-import { Chart as ChartJS } from "chart.js/auto";
+import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import Layout from "../../components/Layout";
 import { getError } from "../../utils/error";
@@ -36,6 +36,7 @@ function reducer(state, action) {
 }
 
 function AdminDashboard() {
+  Chart.register();
   const { state } = useContext(Store);
   const router = useRouter();
   const classes = useStyles();

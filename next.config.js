@@ -3,6 +3,6 @@ module.exports = {
   mongo: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
   images: {
-    domains: ["cloudinary.com"],
+    domains: ["res.cloudinary.com"],
   },
 };

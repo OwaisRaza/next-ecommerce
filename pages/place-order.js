@@ -65,6 +65,7 @@ function PlaceOrder() {
       const { data } = await axios.post(
         "/api/orders",
         {
+          username: userInfo.username,
           orderItems: cartItems,
           shippingAddress,
           paymentMethod,

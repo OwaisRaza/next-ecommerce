@@ -67,35 +67,9 @@ function AdminOrders() {
     fetchData();
   }, []);
   return (
-    <Layout title="Orders">
-      <Grid container spacing={1}>
-        <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
-            <List>
-              <NextLink href="/admin/dashboard" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Admin Dashboard"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/orders" passHref>
-                <ListItem selected button component="a">
-                  <ListItemText primary="Orders"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/products" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Products"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/users" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Users"></ListItemText>
-                </ListItem>
-              </NextLink>
-            </List>
-          </Card>
-        </Grid>
-        <Grid item md={9} xs={12}>
+    <Layout title="Orders" isAdmin={true}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center">
+        <Grid item xs={10}>
           <Card className={classes.section}>
             <List>
               <ListItem>
@@ -128,7 +102,7 @@ function AdminOrders() {
                           <TableRow key={order._id}>
                             <TableCell>{order._id.substring(20, 24)}</TableCell>
                             <TableCell>
-                              {order.user ? order.user.name : "DELETED USER"}
+                              {order.username ? order.username : "DELETED USER"}
                             </TableCell>
                             <TableCell>{order.createdAt}</TableCell>
                             <TableCell>${order.totalPrice}</TableCell>

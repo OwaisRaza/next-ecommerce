@@ -4,7 +4,11 @@ import {
   Badge,
   Button,
   Container,
+  Drawer,
   Link,
+  List,
+  ListItem,
+  ListItemText,
   Menu,
   MenuItem,
   Switch,
@@ -21,10 +25,10 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import CarouselView from "./Carousel";
 
-const Layout = ({ title, description, children, carousel }) => {
+const Layout = ({ title, description, children, carousel, isAdmin }) => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
-  const { darkMode, cart, userInfo } = state;
+  const { darkMode, cart, userInfo, selectedIndex } = state;
   const theme = createTheme({
     typography: {
       h1: {
@@ -57,6 +61,13 @@ const Layout = ({ title, description, children, carousel }) => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleListItemClick = (e, index, redirect) => {
+    dispatch({ type: "SELECTED_INDEX", payload: index });
+    Cookies.set("selectedIndex", index);
+    router.push(redirect);
+  };
+
   const loginClickHandler = (e, redirect) => {
     setAnchorEl(e.currentTarget);
     if (redirect) {
@@ -75,6 +86,7 @@ const Layout = ({ title, description, children, carousel }) => {
     Cookies.remove("cartItems");
     Cookies.remove("shippingAddress");
     Cookies.remove("paymentMethod");
+    Cookies.remove("selectedIndex");
     router.push("/");
   };
 
@@ -135,7 +147,9 @@ const Layout = ({ title, description, children, carousel }) => {
                   </MenuItem>
                   {userInfo.isAdmin && (
                     <MenuItem
-                      onClick={(e) => loginClickHandler(e, "/admin/dashboard")}
+                      onClick={(e) =>
+                        handleListItemClick(e, 0, "/admin/dashboard")
+                      }
                     >
                       Admin Dashboard
                     </MenuItem>
@@ -153,7 +167,59 @@ const Layout = ({ title, description, children, carousel }) => {
           </Toolbar>
         </AppBar>
         {carousel && <CarouselView />}
-        <Container className={classes.main}>{children}</Container>
+        {isAdmin ? (
+          <div className={classes.root}>
+            <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <Toolbar />
+              <div className={classes.drawerContainer}>
+                <List>
+                  <ListItem
+                    button
+                    selected={selectedIndex === 0}
+                    onClick={(e) =>
+                      handleListItemClick(e, 0, "/admin/dashboard")
+                    }
+                  >
+                    <ListItemText primary="Admin Dashboard"></ListItemText>
+                  </ListItem>
+                  <ListItem
+                    button
+                    selected={selectedIndex === 1}
+                    onClick={(e) => handleListItemClick(e, 1, "/admin/orders")}
+                  >
+                    <ListItemText primary="Orders"></ListItemText>
+                  </ListItem>
+                  <ListItem
+                    button
+                    selected={selectedIndex === 2}
+                    onClick={(e) =>
+                      handleListItemClick(e, 2, "/admin/products")
+                    }
+                  >
+                    <ListItemText primary="Products"></ListItemText>
+                  </ListItem>
+                  <ListItem
+                    button
+                    selected={selectedIndex === 3}
+                    onClick={(e) => handleListItemClick(e, 3, "/admin/users")}
+                  >
+                    <ListItemText primary="Users"></ListItemText>
+                  </ListItem>
+                </List>
+              </div>
+            </Drawer>
+            <main className={classes.content}>{children}</main>
+          </div>
+        ) : (
+          <Container className={classes.main}>{children}</Container>
+        )}
+
         <footer className={classes.footer}>
           <Typography>All rights reserved. Next Commerce </Typography>
         </footer>

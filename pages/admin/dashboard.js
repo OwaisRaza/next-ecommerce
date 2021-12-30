@@ -66,35 +66,9 @@ function AdminDashboard() {
     fetchData();
   }, []);
   return (
-    <Layout title="Admin Dashboard">
-      <Grid container spacing={1}>
-        <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
-            <List>
-              <NextLink href="/admin/dashboard" passHref>
-                <ListItem selected button component="a">
-                  <ListItemText primary="Admin Dashboard"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/orders" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Orders"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/products" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Products"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/admin/users" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Users"></ListItemText>
-                </ListItem>
-              </NextLink>
-            </List>
-          </Card>
-        </Grid>
-        <Grid item md={9} xs={12}>
+    <Layout title="Admin Dashboard" isAdmin={true}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center">
+        <Grid item xs={10}>
           <Card className={classes.section}>
             <List>
               <ListItem>

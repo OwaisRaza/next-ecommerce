@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-
+const drawerWidth = 240;
 const useStyles = makeStyles({
   navbar: {
     backgroundColor: "#203040",
@@ -44,6 +44,26 @@ const useStyles = makeStyles({
     minHeight: "210px",
     maxHeight: "210px",
     objectFit: "fill !important",
+  },
+  root: {
+    display: "flex",
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    zIndex: "1",
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    background: "#203040",
+    color: "#fff",
+  },
+  drawerContainer: {
+    overflow: "auto",
+  },
+  content: {
+    flexGrow: 1,
+    padding: "20px",
   },
 });
 

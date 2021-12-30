@@ -19,10 +19,15 @@ const initialState = {
   userInfo: Cookies.get("userInfo")
     ? JSON.parse(Cookies.get("userInfo"))
     : null,
+  selectedIndex: Cookies.get("selectedIndex")
+    ? Cookies.get("selectedIndex")
+    : 0,
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case "SELECTED_INDEX":
+      return { ...state, selectedIndex: action.payload };
     case "DARK_MODE_ON":
       return { ...state, darkMode: true };
     case "DARK_MODE_OFF":

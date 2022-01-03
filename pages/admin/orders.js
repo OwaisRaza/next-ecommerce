@@ -22,6 +22,7 @@ import { getError } from "../../utils/error";
 import { Store } from "../../utils/Store";
 import Layout from "../../components/Layout";
 import useStyles from "../../utils/style";
+import { dateFormat } from "../../utils/dateFormat";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -103,16 +104,18 @@ function AdminOrders() {
                             <TableCell>
                               {order.username ? order.username : "DELETED USER"}
                             </TableCell>
-                            <TableCell>{order.createdAt}</TableCell>
-                            <TableCell>${order.totalPrice}</TableCell>
+                            <TableCell>{dateFormat(order.createdAt)}</TableCell>
+                            <TableCell>Rs:{order.totalPrice}</TableCell>
                             <TableCell>
                               {order.isPaid
-                                ? `paid at ${order.paidAt}`
+                                ? `paid at ${dateFormat(order.paidAt)}`
                                 : "not paid"}
                             </TableCell>
                             <TableCell>
                               {order.isDelivered
-                                ? `delivered at ${order.deliveredAt}`
+                                ? `delivered at ${dateFormat(
+                                    order.isDelivered
+                                  )}`
                                 : "not delivered"}
                             </TableCell>
                             <TableCell>

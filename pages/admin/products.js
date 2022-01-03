@@ -67,7 +67,7 @@ function AdminProducts() {
   });
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userInfo || !userInfo.isAdmin) {
       router.push("/login");
     }
     const fetchData = async () => {
@@ -180,7 +180,7 @@ function AdminProducts() {
                               {product._id.substring(20, 24)}
                             </TableCell>
                             <TableCell>{product.title}</TableCell>
-                            <TableCell>${product.price}</TableCell>
+                            <TableCell>Rs:{product.price}</TableCell>
                             <TableCell>{product.category}</TableCell>
                             <TableCell>{product.currentInStock}</TableCell>
                             <TableCell>{product.rating}</TableCell>

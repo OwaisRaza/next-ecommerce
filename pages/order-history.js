@@ -23,6 +23,7 @@ import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
 import NextLink from "next/link";
 import useStyles from "../utils/style";
+import { dateFormat } from "../utils/dateFormat";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -118,16 +119,18 @@ function OrderHistory() {
                         {orders.map((order) => (
                           <TableRow key={order._id}>
                             <TableCell>{order._id.substring(20, 24)}</TableCell>
-                            <TableCell>{order.createdAt}</TableCell>
-                            <TableCell>${order.totalPrice}</TableCell>
+                            <TableCell>{dateFormat(order.createdAt)}</TableCell>
+                            <TableCell>Rs:{order.totalPrice}</TableCell>
                             <TableCell>
                               {order.isPaid
-                                ? `paid at ${order.paidAt}`
+                                ? `paid at ${dateFormat(order.paidAt)}`
                                 : "not paid"}
                             </TableCell>
                             <TableCell>
                               {order.isDelivered
-                                ? `delivered at ${order.deliveredAt}`
+                                ? `delivered at ${dateFormat(
+                                    order.deliveredAt
+                                  )}`
                                 : "not delivered"}
                             </TableCell>
                             <TableCell>

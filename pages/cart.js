@@ -117,7 +117,7 @@ function CartScreen() {
                           </Select>
                         </TableCell>
                         <TableCell align="right">
-                          <Typography>${item.price}</Typography>
+                          <Typography>Rs:{item.price}</Typography>
                         </TableCell>
                         <TableCell align="right">
                           <Button
@@ -139,8 +139,8 @@ function CartScreen() {
                 <List>
                   <ListItem>
                     <Typography variant="h2">
-                      Subtotal ({cartItems.reduce((a, b) => a + b.quantity, 0)}{" "}
-                      items) : ${" "}
+                      Subtotal({cartItems.reduce((a, b) => a + b.quantity, 0)}{" "}
+                      items) Rs:
                       {cartItems.reduce((a, b) => a + b.quantity * b.price, 0)}
                     </Typography>
                   </ListItem>

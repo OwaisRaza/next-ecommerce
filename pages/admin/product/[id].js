@@ -71,7 +71,7 @@ function ProductEdit({ params }) {
   const { userInfo } = state;
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userInfo || !userInfo.isAdmin) {
       return router.push("/login");
     } else {
       const fetchData = async () => {
@@ -99,6 +99,7 @@ function ProductEdit({ params }) {
       fetchData();
     }
   }, []);
+
   const uploadHandler = async (e, imageField = "img") => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
@@ -198,6 +199,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="title"
                             label="Title"
+                            disabled={loading}
                             error={Boolean(errors.title)}
                             helperText={errors.title ? "title is required" : ""}
                             {...field}
@@ -219,6 +221,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="slug"
                             label="Slug"
+                            disabled={loading}
                             error={Boolean(errors.slug)}
                             helperText={errors.slug ? "Slug is required" : ""}
                             {...field}
@@ -240,6 +243,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="price"
                             label="Price"
+                            disabled={loading}
                             error={Boolean(errors.price)}
                             helperText={errors.price ? "Price is required" : ""}
                             {...field}
@@ -261,6 +265,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="img"
                             label="Img"
+                            disabled={loading}
                             error={Boolean(errors.img)}
                             helperText={errors.img ? "Image is required" : ""}
                             {...field}
@@ -269,7 +274,11 @@ function ProductEdit({ params }) {
                       ></Controller>
                     </ListItem>
                     <ListItem>
-                      <Button variant="contained" component="label">
+                      <Button
+                        variant="contained"
+                        component="label"
+                        disabled={loading}
+                      >
                         Upload File
                         <input type="file" onChange={uploadHandler} hidden />
                       </Button>
@@ -283,6 +292,7 @@ function ProductEdit({ params }) {
                             onClick={(e) => setIsFeatured(e.target.checked)}
                             checked={isFeatured}
                             name="isFeatured"
+                            disabled={loading}
                           />
                         }
                       ></FormControlLabel>
@@ -301,6 +311,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="featuredImage"
                             label="Featured Image"
+                            disabled={loading}
                             error={Boolean(errors.featuredImage)}
                             helperText={
                               errors.featuredImage
@@ -313,7 +324,11 @@ function ProductEdit({ params }) {
                       ></Controller>
                     </ListItem>
                     <ListItem>
-                      <Button variant="contained" component="label">
+                      <Button
+                        variant="contained"
+                        component="label"
+                        disabled={loading}
+                      >
                         Upload File
                         <input
                           type="file"
@@ -337,6 +352,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="category"
                             label="Category"
+                            disabled={loading}
                             error={Boolean(errors.category)}
                             helperText={
                               errors.category ? "Category is required" : ""
@@ -360,6 +376,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="brand"
                             label="Brand"
+                            disabled={loading}
                             error={Boolean(errors.brand)}
                             helperText={errors.brand ? "Brand is required" : ""}
                             {...field}
@@ -381,6 +398,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="currentInStock"
                             label="Current in stock"
+                            disabled={loading}
                             error={Boolean(errors.currentInStock)}
                             helperText={
                               errors.currentInStock
@@ -407,6 +425,7 @@ function ProductEdit({ params }) {
                             multiline
                             id="description"
                             label="Description"
+                            disabled={loading}
                             error={Boolean(errors.description)}
                             helperText={
                               errors.description
@@ -425,6 +444,7 @@ function ProductEdit({ params }) {
                         type="submit"
                         fullWidth
                         color="primary"
+                        disabled={loading}
                       >
                         Update
                       </Button>

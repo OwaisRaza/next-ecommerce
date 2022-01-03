@@ -148,6 +148,7 @@ function UserEdit({ params }) {
                             fullWidth
                             id="username"
                             label="User Name"
+                            disabled={loading}
                             error={Boolean(errors.username)}
                             helperText={
                               errors.username ? "username is required" : ""
@@ -165,6 +166,7 @@ function UserEdit({ params }) {
                             onClick={(e) => setIsAdmin(e.target.checked)}
                             checked={isAdmin}
                             name="isAdmin"
+                            disabled={loading}
                           />
                         }
                       ></FormControlLabel>
@@ -175,6 +177,7 @@ function UserEdit({ params }) {
                         type="submit"
                         fullWidth
                         color="primary"
+                        disabled={loading}
                       >
                         Update
                       </Button>

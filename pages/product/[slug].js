@@ -94,7 +94,7 @@ const ProductDetails = ({ product }) => {
                     <Typography>Price: </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography>${product.price}</Typography>
+                    <Typography>Rs:{product.price}</Typography>
                   </Grid>
                 </Grid>
               </ListItem>

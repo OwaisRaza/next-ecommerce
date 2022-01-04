@@ -16,18 +16,18 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
   await db.connect();
   const newProduct = new Product({
-    title: "sample name",
-    slug: "sample-slug-" + Math.random(),
-    img: "/images/shirt1.jpg",
-    price: 0,
-    category: "sample category",
-    brand: "sample brand",
-    currentInStock: 0,
-    description: "sample description",
-    rating: 0,
+    title: req.body.title,
+    slug: req.body.slug,
+    img: req.body.img,
+    price: req.body.price,
+    category: req.body.category,
+    brand: req.body.brand,
+    currentInStock: req.body.currentInStock,
+    description: req.body.description,
+    rating: req.body.rating,
     numReviews: 0,
-    isFeatured: true,
-    featuredImage: "/images/shirt1.jpg",
+    isFeatured: req.body.isFeatured,
+    featuredImage: req.body.featuredImage,
   });
 
   const product = await newProduct.save();

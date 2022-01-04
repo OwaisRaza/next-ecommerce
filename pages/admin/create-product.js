@@ -1,7 +1,6 @@
 import axios from "axios";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useEffect, useContext, useReducer, useState } from "react";
+import { useEffect, useContext, useReducer, useState } from "react";
 import {
   Grid,
   List,
@@ -14,27 +13,22 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@material-ui/core";
-import { getError } from "../../../utils/error";
-import { Store } from "../../../utils/Store";
-import Layout from "../../../components/Layout";
-import useStyles from "../../../utils/style";
+import { getError } from "../../utils/error";
+import { Store } from "../../utils/Store";
+import useStyles from "../../utils/style";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack-next";
+import dynamic from "next/dynamic";
+import Layout from "../../components/Layout";
 
 function reducer(state, action) {
   switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true, error: "" };
-    case "FETCH_SUCCESS":
-      return { ...state, loading: false, error: "" };
-    case "FETCH_FAIL":
-      return { ...state, loading: false, error: action.payload };
-    case "UPDATE_REQUEST":
-      return { ...state, loadingUpdate: true, errorUpdate: "" };
-    case "UPDATE_SUCCESS":
-      return { ...state, loadingUpdate: false, errorUpdate: "" };
-    case "UPDATE_FAIL":
-      return { ...state, loadingUpdate: false, errorUpdate: action.payload };
+    case "CREATE_REQUEST":
+      return { ...state, loadingCreate: true };
+    case "CREATE_SUCCESS":
+      return { ...state, loadingCreate: false };
+    case "CREATE_FAIL":
+      return { ...state, loadingCreate: false };
     case "UPLOAD_REQUEST":
       return { ...state, loadingUpload: true, errorUpload: "" };
     case "UPLOAD_SUCCESS":
@@ -45,20 +39,14 @@ function reducer(state, action) {
       };
     case "UPLOAD_FAIL":
       return { ...state, loadingUpload: false, errorUpload: action.payload };
-
     default:
-      return state;
+      state;
   }
 }
 
-function ProductEdit({ params }) {
-  const productId = params.id;
+function CreateProduct() {
   const { state } = useContext(Store);
-  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: "",
-    });
+  const [{ loadingCreate, loadingUpload }, dispatch] = useReducer(reducer, {});
   const {
     handleSubmit,
     control,
@@ -69,36 +57,10 @@ function ProductEdit({ params }) {
   const router = useRouter();
   const classes = useStyles();
   const { userInfo } = state;
-  const [isFeatured, setIsFeatured] = useState(false);
 
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       return router.push("/login");
-    } else {
-      const fetchData = async () => {
-        try {
-          dispatch({ type: "FETCH_REQUEST" });
-          const { data } = await axios.get(`/api/admin/products/${productId}`, {
-            headers: { authorization: `Bearer ${userInfo.token}` },
-          });
-          console.log("data", data);
-          dispatch({ type: "FETCH_SUCCESS" });
-          setValue("title", data.title);
-          setValue("slug", data.slug);
-          setValue("price", data.price);
-          setValue("img", data.img);
-          setValue("featuredImage", data.featuredImage);
-          setIsFeatured(data.isFeatured);
-          setValue("category", data.category);
-          setValue("brand", data.brand);
-          setValue("currentInStock", data.currentInStock);
-          setValue("description", data.description);
-          setValue("rating", data.rating);
-        } catch (err) {
-          dispatch({ type: "FETCH_FAIL", payload: getError(err) });
-        }
-      };
-      fetchData();
     }
   }, []);
 
@@ -136,50 +98,59 @@ function ProductEdit({ params }) {
     description,
   }) => {
     closeSnackbar();
+    console.log({
+      title,
+      slug,
+      price,
+      category,
+      img,
+      featuredImage,
+      brand,
+      currentInStock,
+      rating,
+      description,
+      isFeatured,
+    });
     try {
-      dispatch({ type: "UPDATE_REQUEST" });
-      await axios.put(
-        `/api/admin/products/${productId}`,
+      dispatch({ type: "CREATE_REQUEST" });
+      await axios.post(
+        `/api/admin/products`,
         {
           title,
           slug,
           price,
           category,
           img,
+          isFeatured,
           featuredImage,
           brand,
           currentInStock,
-          isFeatured,
           rating,
           description,
         },
         { headers: { authorization: `Bearer ${userInfo.token}` } }
       );
-      dispatch({ type: "UPDATE_SUCCESS" });
+      dispatch({ type: "CREATE_SUCCESS" });
       enqueueSnackbar("Product updated successfully", { variant: "success" });
       router.push("/admin/products");
     } catch (err) {
-      dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
+      dispatch({ type: "CREATE_FAIL", payload: getError(err) });
       enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
 
+  const [isFeatured, setIsFeatured] = useState(false);
+
   return (
-    <Layout title={`Edit Product ${productId}`} isAdmin={true}>
+    <Layout title={`Create Product`} isAdmin={true}>
       <Grid container spacing={1} justifyContent="center" alignItems="center">
         <Grid item xs={10}>
           <Card className={classes.section}>
             <List>
               <ListItem>
                 <Typography component="h1" variant="h1">
-                  Edit Product {productId}
+                  Create Product
                 </Typography>
-              </ListItem>
-              <ListItem>
-                {loading && <CircularProgress></CircularProgress>}
-                {error && (
-                  <Typography className={classes.error}>{error}</Typography>
-                )}
               </ListItem>
               <ListItem>
                 <form
@@ -201,7 +172,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="title"
                             label="Title"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.title)}
                             helperText={errors.title ? "title is required" : ""}
                             {...field}
@@ -223,7 +194,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="slug"
                             label="Slug"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.slug)}
                             helperText={errors.slug ? "Slug is required" : ""}
                             {...field}
@@ -245,7 +216,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="price"
                             label="Price"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.price)}
                             helperText={errors.price ? "Price is required" : ""}
                             {...field}
@@ -267,7 +238,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="img"
                             label="Img"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.img)}
                             helperText={errors.img ? "Image is required" : ""}
                             {...field}
@@ -279,7 +250,7 @@ function ProductEdit({ params }) {
                       <Button
                         variant="contained"
                         component="label"
-                        disabled={loading}
+                        disabled={loadingCreate}
                       >
                         Upload File
                         <input type="file" onChange={uploadHandler} hidden />
@@ -294,7 +265,7 @@ function ProductEdit({ params }) {
                             onClick={(e) => setIsFeatured(e.target.checked)}
                             checked={isFeatured}
                             name="isFeatured"
-                            disabled={loading}
+                            disabled={loadingCreate}
                           />
                         }
                       ></FormControlLabel>
@@ -313,7 +284,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="featuredImage"
                             label="Featured Image"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.featuredImage)}
                             helperText={
                               errors.featuredImage
@@ -329,7 +300,7 @@ function ProductEdit({ params }) {
                       <Button
                         variant="contained"
                         component="label"
-                        disabled={loading}
+                        disabled={loadingCreate}
                       >
                         Upload File
                         <input
@@ -354,7 +325,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="category"
                             label="Category"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.category)}
                             helperText={
                               errors.category ? "Category is required" : ""
@@ -378,7 +349,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="brand"
                             label="Brand"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.brand)}
                             helperText={errors.brand ? "Brand is required" : ""}
                             {...field}
@@ -401,7 +372,7 @@ function ProductEdit({ params }) {
                             type="number"
                             id="currentInStock"
                             label="Current in stock"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.currentInStock)}
                             helperText={
                               errors.currentInStock
@@ -429,7 +400,7 @@ function ProductEdit({ params }) {
                             fullWidth
                             id="rating"
                             label="Rating"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.rating)}
                             helperText={
                               errors.rating
@@ -458,7 +429,7 @@ function ProductEdit({ params }) {
                             multiline
                             id="description"
                             label="Description"
-                            disabled={loading}
+                            disabled={loadingCreate}
                             error={Boolean(errors.description)}
                             helperText={
                               errors.description
@@ -477,11 +448,11 @@ function ProductEdit({ params }) {
                         type="submit"
                         fullWidth
                         color="primary"
-                        disabled={loading}
+                        disabled={loadingCreate}
                       >
-                        Update
+                        Create Product
                       </Button>
-                      {loadingUpdate && <CircularProgress />}
+                      {loadingCreate && <CircularProgress />}
                     </ListItem>
                   </List>
                 </form>
@@ -494,10 +465,4 @@ function ProductEdit({ params }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
-  return {
-    props: { params },
-  };
-}
-
-export default dynamic(() => Promise.resolve(ProductEdit), { ssr: false });
+export default dynamic(() => Promise.resolve(CreateProduct), { ssr: false });

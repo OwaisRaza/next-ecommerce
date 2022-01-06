@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import NextLink from "next/link";
 import React, { useEffect, useContext, useReducer } from "react";
 import {
-  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -23,6 +22,7 @@ import { Store } from "../../utils/Store";
 import Layout from "../../components/Layout";
 import useStyles from "../../utils/style";
 import { dateFormat } from "../../utils/dateFormat";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -80,7 +80,11 @@ function AdminOrders() {
 
               <ListItem>
                 {loading ? (
-                  <CircularProgress />
+                  <TableContainer>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </TableContainer>
                 ) : error ? (
                   <Typography className={classes.error}>{error}</Typography>
                 ) : (

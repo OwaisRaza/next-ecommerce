@@ -30,15 +30,19 @@ function reducer(state, action) {
     case "CREATE_FAIL":
       return { ...state, loadingCreate: false };
     case "UPLOAD_REQUEST":
-      return { ...state, loadingUpload: true, errorUpload: "" };
+      return { ...state, [action.payload]: true, errorUpload: "" };
     case "UPLOAD_SUCCESS":
       return {
         ...state,
-        loadingUpload: false,
+        [action.payload]: false,
         errorUpload: "",
       };
     case "UPLOAD_FAIL":
-      return { ...state, loadingUpload: false, errorUpload: action.payload };
+      return {
+        ...state,
+        [action.payload.loadingName]: false,
+        errorUpload: action.payload.error,
+      };
     default:
       state;
   }
@@ -46,7 +50,8 @@ function reducer(state, action) {
 
 function CreateProduct() {
   const { state } = useContext(Store);
-  const [{ loadingCreate, loadingUpload }, dispatch] = useReducer(reducer, {});
+  const [{ loadingCreate, loadingUpload, loadingFeature }, dispatch] =
+    useReducer(reducer, {});
   const {
     handleSubmit,
     control,
@@ -68,19 +73,24 @@ function CreateProduct() {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
     bodyFormData.append("file", file);
+    const loadingName =
+      imageField === "img" ? "loadingUpload" : "loadingFeature";
     try {
-      dispatch({ type: "UPLOAD_REQUEST" });
+      dispatch({ type: "UPLOAD_REQUEST", payload: loadingName });
       const { data } = await axios.post("/api/admin/upload", bodyFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
           authorization: `Bearer ${userInfo.token}`,
         },
       });
-      dispatch({ type: "UPLOAD_SUCCESS" });
+      dispatch({ type: "UPLOAD_SUCCESS", payload: loadingName });
       setValue(imageField, data.secure_url);
       enqueueSnackbar("File uploaded successfully", { variant: "success" });
     } catch (err) {
-      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      dispatch({
+        type: "UPLOAD_FAIL",
+        payload: { loadingName: loadingName, error: getError(err) },
+      });
       enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
@@ -309,7 +319,7 @@ function CreateProduct() {
                           hidden
                         />
                       </Button>
-                      {loadingUpload && <CircularProgress />}
+                      {loadingFeature && <CircularProgress />}
                     </ListItem>
                     <ListItem>
                       <Controller

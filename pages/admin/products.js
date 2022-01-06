@@ -23,6 +23,7 @@ import { Store } from "../../utils/Store";
 import Layout from "../../components/Layout";
 import useStyles from "../../utils/style";
 import { useSnackbar } from "notistack-next";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -127,7 +128,11 @@ function AdminProducts() {
 
               <ListItem>
                 {loading ? (
-                  <CircularProgress />
+                  <TableContainer>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </TableContainer>
                 ) : error ? (
                   <Typography className={classes.error}>{error}</Typography>
                 ) : (

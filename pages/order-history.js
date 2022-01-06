@@ -1,7 +1,6 @@
 import {
   Button,
   Card,
-  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -24,6 +23,7 @@ import { Store } from "../utils/Store";
 import NextLink from "next/link";
 import useStyles from "../utils/style";
 import { dateFormat } from "../utils/dateFormat";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -99,7 +99,11 @@ function OrderHistory() {
               </ListItem>
               <ListItem>
                 {loading ? (
-                  <CircularProgress />
+                  <TableContainer>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </TableContainer>
                 ) : error ? (
                   <Typography className={classes.error}>{error}</Typography>
                 ) : (

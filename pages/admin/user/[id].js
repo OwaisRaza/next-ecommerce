@@ -20,6 +20,7 @@ import Layout from "../../../components/Layout";
 import useStyles from "../../../utils/style";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack-next";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -35,17 +36,6 @@ function reducer(state, action) {
       return { ...state, loadingUpdate: false, errorUpdate: "" };
     case "UPDATE_FAIL":
       return { ...state, loadingUpdate: false, errorUpdate: action.payload };
-    case "UPLOAD_REQUEST":
-      return { ...state, loadingUpload: true, errorUpload: "" };
-    case "UPLOAD_SUCCESS":
-      return {
-        ...state,
-        loadingUpload: false,
-        errorUpload: "",
-      };
-    case "UPLOAD_FAIL":
-      return { ...state, loadingUpload: false, errorUpload: action.payload };
-
     default:
       return state;
   }
@@ -81,8 +71,8 @@ function UserEdit({ params }) {
             headers: { authorization: `Bearer ${userInfo.token}` },
           });
           setIsAdmin(data.isAdmin);
-          dispatch({ type: "FETCH_SUCCESS" });
           setValue("username", data.username);
+          dispatch({ type: "FETCH_SUCCESS" });
         } catch (err) {
           dispatch({ type: "FETCH_FAIL", payload: getError(err) });
         }
@@ -117,75 +107,92 @@ function UserEdit({ params }) {
         <Grid item xs={10}>
           <Card className={classes.section}>
             <List>
-              <ListItem>
-                <Typography component="h1" variant="h1">
-                  Edit User {userId}
-                </Typography>
-              </ListItem>
-              <ListItem>
-                {loading && <CircularProgress></CircularProgress>}
-                {error && (
-                  <Typography className={classes.error}>{error}</Typography>
-                )}
-              </ListItem>
-              <ListItem>
-                <form
-                  onSubmit={handleSubmit(submitHandler)}
-                  className={classes.form}
-                >
-                  <List>
+              {loading ? (
+                <div>
+                  <ListItem component="h1" variant="h1">
+                    <Skeleton variant="h1" width="100%" height={40} />
+                  </ListItem>
+                  <div className={classes.form}>
                     <ListItem>
-                      <Controller
-                        name="username"
-                        control={control}
-                        defaultValue=""
-                        rules={{
-                          required: true,
-                        }}
-                        render={({ field }) => (
-                          <TextField
-                            variant="outlined"
-                            fullWidth
-                            id="username"
-                            label="User Name"
-                            disabled={loading}
-                            error={Boolean(errors.username)}
-                            helperText={
-                              errors.username ? "username is required" : ""
+                      <Skeleton variant="rect" width="100%" height={50} />
+                    </ListItem>
+                    <ListItem>
+                      <Skeleton variant="rect" width={150} height={30} />
+                    </ListItem>
+                    <ListItem>
+                      <Skeleton variant="rect" width="100%" height={40} />
+                    </ListItem>
+                  </div>
+                </div>
+              ) : error ? (
+                <Typography className={classes.error}>{error}</Typography>
+              ) : (
+                <div>
+                  <ListItem>
+                    <Typography component="h1" variant="h1">
+                      Edit User {userId}
+                    </Typography>
+                  </ListItem>
+                  <ListItem>
+                    <form
+                      onSubmit={handleSubmit(submitHandler)}
+                      className={classes.form}
+                    >
+                      <List>
+                        <ListItem>
+                          <Controller
+                            name="username"
+                            control={control}
+                            defaultValue=""
+                            rules={{
+                              required: true,
+                            }}
+                            render={({ field }) => (
+                              <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="username"
+                                label="User Name"
+                                disabled={loadingUpdate}
+                                error={Boolean(errors.username)}
+                                helperText={
+                                  errors.username ? "username is required" : ""
+                                }
+                                {...field}
+                              ></TextField>
+                            )}
+                          ></Controller>
+                        </ListItem>
+                        <ListItem>
+                          <FormControlLabel
+                            label="Is Admin"
+                            control={
+                              <Checkbox
+                                onClick={(e) => setIsAdmin(e.target.checked)}
+                                checked={isAdmin}
+                                name="isAdmin"
+                                disabled={loadingUpdate}
+                              />
                             }
-                            {...field}
-                          ></TextField>
-                        )}
-                      ></Controller>
-                    </ListItem>
-                    <ListItem>
-                      <FormControlLabel
-                        label="Is Admin"
-                        control={
-                          <Checkbox
-                            onClick={(e) => setIsAdmin(e.target.checked)}
-                            checked={isAdmin}
-                            name="isAdmin"
-                            disabled={loading}
-                          />
-                        }
-                      ></FormControlLabel>
-                    </ListItem>
-                    <ListItem>
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        fullWidth
-                        color="primary"
-                        disabled={loading}
-                      >
-                        Update
-                      </Button>
-                      {loadingUpdate && <CircularProgress />}
-                    </ListItem>
-                  </List>
-                </form>
-              </ListItem>
+                          ></FormControlLabel>
+                        </ListItem>
+                        <ListItem>
+                          <Button
+                            variant="contained"
+                            type="submit"
+                            fullWidth
+                            color="primary"
+                            disabled={loadingUpdate}
+                          >
+                            Update
+                          </Button>
+                          {loadingUpdate && <CircularProgress />}
+                        </ListItem>
+                      </List>
+                    </form>
+                  </ListItem>
+                </div>
+              )}
             </List>
           </Card>
         </Grid>

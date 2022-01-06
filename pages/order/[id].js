@@ -11,7 +11,6 @@ import {
   Card,
   List,
   ListItem,
-  CircularProgress,
   Button,
 } from "@material-ui/core";
 import { useContext, useEffect, useReducer } from "react";
@@ -24,6 +23,7 @@ import { useRouter } from "next/router";
 import useStyles from "../../utils/style";
 import axios from "axios";
 import { getError } from "../../utils/error";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -93,15 +93,45 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      <Typography component="h1" variant="h1">
-        Order {orderId}
-      </Typography>
       {loading ? (
-        <CircularProgress />
+        <div>
+          <Typography component="h1" variant="h1">
+            <Skeleton variant="h1" width="100%" height={40} />
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item md={9} xs={12}>
+              <Skeleton variant="rect" width="100%" height={150} />
+              <Skeleton
+                variant="rect"
+                width="100%"
+                height={150}
+                style={{ marginTop: 8 }}
+              />
+              <Skeleton
+                variant="rect"
+                width="100%"
+                height={150}
+                style={{ marginTop: 8 }}
+              />
+            </Grid>
+            <Grid item md={3} xs={12}>
+              <Skeleton variant="rect" width="100%" height={250} />
+              <Skeleton
+                variant="rect"
+                width="100%"
+                height={40}
+                style={{ marginTop: 8 }}
+              />
+            </Grid>
+          </Grid>
+        </div>
       ) : error ? (
         <Typography className={classes.error}>{error}</Typography>
       ) : (
         <div>
+          <Typography component="h1" variant="h1">
+            Order {orderId}
+          </Typography>
           <Grid container spacing={1}>
             <Grid item md={9} xs={12}>
               <Card className={classes.section}>

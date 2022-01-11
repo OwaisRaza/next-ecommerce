@@ -4,7 +4,6 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -15,7 +14,6 @@ import { useContext, useEffect } from "react";
 import Layout from "../components/Layout";
 import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
-import NextLink from "next/link";
 import useStyles from "../utils/style";
 import { Controller, useForm } from "react-hook-form";
 import Cookies from "js-cookie";

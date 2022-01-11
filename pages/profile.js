@@ -77,24 +77,8 @@ function Profile() {
 
   return (
     <Layout title="Profile">
-      <Grid container spacing={1}>
-        <Grid item md={3} xs={12}>
-          <Card className={classes.section}>
-            <List>
-              <NextLink href="/profile" passHref>
-                <ListItem selected button component="a">
-                  <ListItemText primary="User Profile"></ListItemText>
-                </ListItem>
-              </NextLink>
-              <NextLink href="/order-history" passHref>
-                <ListItem button component="a">
-                  <ListItemText primary="Order History"></ListItemText>
-                </ListItem>
-              </NextLink>
-            </List>
-          </Card>
-        </Grid>
-        <Grid item md={9} xs={12}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center">
+        <Grid item md={9} xs={12} className={classes.mt40}>
           <Card className={classes.section}>
             <List>
               <ListItem>

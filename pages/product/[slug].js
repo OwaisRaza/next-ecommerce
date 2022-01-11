@@ -120,6 +120,18 @@ const ProductDetails = ({ product }) => {
                   Add to cart
                 </Button>
               </ListItem>
+              <ListItem>
+                <NextLink href="/cart" passHref>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    disabled={!state.cart.cartItems.length}
+                  >
+                    Go to checkout
+                  </Button>
+                </NextLink>
+              </ListItem>
             </List>
           </Card>
         </Grid>

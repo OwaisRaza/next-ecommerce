@@ -107,7 +107,7 @@ function AdminDashboard() {
                         <Card raised>
                           <CardContent>
                             <Typography variant="h1">
-                              Rs:{summary.ordersPrice}
+                              Rs:{summary.ordersPrice.toLocaleString()}
                             </Typography>
                             <Typography>Sales</Typography>
                           </CardContent>
@@ -185,7 +185,7 @@ function AdminDashboard() {
                         datasets: [
                           {
                             label: "Sales",
-                            backgroundColor: "rgba(162, 222, 208, 1)",
+                            backgroundColor: "#ABA2F1",
                             data: summary.salesData.map((x) => x.totalSales),
                           },
                         ],

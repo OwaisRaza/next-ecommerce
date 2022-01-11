@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 const drawerWidth = 240;
 const useStyles = makeStyles({
   navbar: {
-    backgroundColor: "#203040",
+    backgroundColor: "#009688",
     "& a": {
       color: "#ffffff",
       marginLeft: 10,
@@ -21,12 +21,20 @@ const useStyles = makeStyles({
   },
   main: {
     minHeight: "80vh",
+    marginBottom: "50px",
   },
   section: {
     marginTop: 10,
     marginBottom: 10,
   },
   footer: {
+    width: "100%",
+    padding: "5px",
+    color: "#fff",
+    background: "#009688",
+    marginTop: "15px",
+    position: "fixed",
+    bottom: 0,
     textAlign: "center",
   },
   form: {
@@ -55,7 +63,7 @@ const useStyles = makeStyles({
   },
   drawerPaper: {
     width: drawerWidth,
-    background: "#203040",
+    background: "#424242",
     color: "#fff",
   },
   drawerContainer: {
@@ -64,6 +72,10 @@ const useStyles = makeStyles({
   content: {
     flexGrow: 1,
     padding: "20px",
+    marginBottom: "25px",
+  },
+  mt40: {
+    marginTop: "40px",
   },
 });
 

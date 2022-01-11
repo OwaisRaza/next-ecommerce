@@ -344,9 +344,6 @@ function ProductEdit({ params }) {
                             name="featuredImage"
                             control={control}
                             defaultValue=""
-                            rules={{
-                              required: true,
-                            }}
                             render={({ field }) => (
                               <TextField
                                 variant="outlined"
@@ -355,11 +352,6 @@ function ProductEdit({ params }) {
                                 label="Featured Image"
                                 disabled={loadingUpdate}
                                 error={Boolean(errors.featuredImage)}
-                                helperText={
-                                  errors.featuredImage
-                                    ? "Featured Image is required"
-                                    : ""
-                                }
                                 {...field}
                               ></TextField>
                             )}
